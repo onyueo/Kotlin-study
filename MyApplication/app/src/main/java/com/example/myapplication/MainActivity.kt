@@ -2,11 +2,16 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+
+    private var isDouble = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,5 +63,33 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        // 랜덤 햄서터 페이지 이동
+        val dice = findViewById<Button>(R.id.dice)
+        dice.setOnClickListener {
+            val intent = Intent(this, DiceActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 명함 페이지 이동
+        val goodword = findViewById<Button>(R.id.goodWord)
+        goodword.setOnClickListener {
+            val intent = Intent(this, SentenceActivity::class.java)
+            startActivity(intent)
+        }
+
+
+    }
+
+
+    override fun onBackPressed() {
+        if (isDouble) {
+            super.onBackPressed() // 기본 동작 호출
+        } else {
+            isDouble = true
+            Toast.makeText(this, "한번 더 누르면 종료!.", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ isDouble = false }, 2000)
+        }
     }
 }
