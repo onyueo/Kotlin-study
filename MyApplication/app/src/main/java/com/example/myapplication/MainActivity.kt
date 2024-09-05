@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         // 명함 페이지 이동
         val goodword = findViewById<Button>(R.id.goodWord)
         goodword.setOnClickListener {
-            val intent = Intent(this, SentenceActivity::class.java)
+            val intent = Intent(this, MainWordActivity::class.java)
             startActivity(intent)
         }
 

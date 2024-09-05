@@ -1,24 +1,30 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.ListView
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
+import com.example.myapplication.databinding.ActivityMainWordBinding
 
-class SentenceActivity : AppCompatActivity() {
+class MainWordActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainWordBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_sentence)
+        setContentView(R.layout.activity_main_word)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // 전체 데이터
+        // 명언 리스트 데이터
         val sentenceList = mutableListOf<String>()
         sentenceList.add("이것은 명언입니다111")
         sentenceList.add("이것은 명언입니다2222")
@@ -27,12 +33,16 @@ class SentenceActivity : AppCompatActivity() {
         sentenceList.add("이것은 명언입니다5555")
 
 
-        // activity_sentence연결작업
-        val senTenceAdapter = GoodwordListViewAdpater(sentenceList)
+        // 전체 명언보기 이동
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_word)
+        binding.showAllBtn.setOnClickListener {
+            Log.d("MainWordActivity", "전체 명언 보기 버튼 클릭됨")
+            var intent = Intent(this, SentenceActivity::class.java)
+            startActivity(intent)
+        }
 
-        val listview = findViewById<ListView>(R.id.sentenceListView)
-
-        listview.adapter = senTenceAdapter
+        // 텍스트 변경
+        binding.goodWordText.setText(sentenceList.random())
 
     }
 }
