@@ -32,5 +32,4 @@ class GoodwordListViewAdpater(val List : MutableList<String>) : BaseAdapter() {
         return convertView!!
     }
 
-
 }
